@@ -17,7 +17,7 @@ int main(void) {
   time(&tempo_inicio);
   movimenta(&m, &Solucoes, tentativa, &pilhaUltimaPosValida);
   time(&tempo_fim);
-  printf(tempo_fim)
+  printf("%",tempo_fim);
   tempo_gasto = tempo_fim - tempo_inicio;
 
   mostraMelhorSolucao(Solucoes, m);
