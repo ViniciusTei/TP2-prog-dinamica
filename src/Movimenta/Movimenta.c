@@ -66,8 +66,9 @@ void atualizaPosDiagDireita(Mapa *mapa) {
   mapa->posicao_atual_samus.y++;
 }
 
-int verificaEhCaminhoValido(Mapa *mapa, Solucao *tentativa, ArrayList *pilhaDePosicoesValidas) {
+int verificaEhCaminhoValido(Mapa *mapa, Solucao *tentativa, ArrayList *pilhaDePosicoesValidas, Analise *values) {
   if (mapa->posicao_atual_samus.x == 0) {
+    values->numCaminhosEncontrados++;
     int soma = 0;
     for (int i = 0; i < pilhaDePosicoesValidas->last; i++) {
       Posicao posicao = *(Posicao*) pilhaDePosicoesValidas->data[i].item;
@@ -114,7 +115,9 @@ void removePosicaoPilha(ArrayList *pilha) {
   }
 }
 
-void movimenta(Mapa *mapa, ArrayList *Solucoes, Solucao tentativa, ArrayList *pilhaDePosicoesValidas) {
+void movimenta(Mapa *mapa, ArrayList *Solucoes, Solucao tentativa, 
+ArrayList *pilhaDePosicoesValidas, Analise *values) {
+  values->numChamadasRecursivas++;
   int resultado_validacao, ehInicioMapa = verificaEstaNoInicioDoMapa(mapa);
   Posicao ultimaPosValida, posicao_desejada; 
   Posicao primeira_pos = *(Posicao*) pilhaDePosicoesValidas->data[0].item;
@@ -133,7 +136,7 @@ void movimenta(Mapa *mapa, ArrayList *Solucoes, Solucao tentativa, ArrayList *pi
         initializeArrayList(pilhaDePosicoesValidas);
       }
       atualizaPosEsquerda(mapa);
-      movimenta(mapa, Solucoes, tentativa, pilhaDePosicoesValidas);
+      movimenta(mapa, Solucoes, tentativa, pilhaDePosicoesValidas, values);
       ehInicioMapa = verificaEstaNoInicioDoMapa(mapa);
     }
     // se nao for um node valido e estamos acima do fundo apenas voltamos
@@ -159,7 +162,8 @@ void movimenta(Mapa *mapa, ArrayList *Solucoes, Solucao tentativa, ArrayList *pi
 
   // se estamos no topo e o tempo total <= velocidade da lava * altura
   // encontramos uma solucao valida! salva tentativa no array solucoes
-  if (verificaEhCaminhoValido(mapa, &tentativa, pilhaDePosicoesValidas) == TRUE) {
+  if (verificaEhCaminhoValido(mapa, &tentativa, pilhaDePosicoesValidas, values) == TRUE) {
+    values->caminhosValidosEncontrados++;
     for(int i = 0; i < pilhaDePosicoesValidas->last; i++) {
       addPosicao(&tentativa.poisicoes, *(Posicao*) pilhaDePosicoesValidas->data[i].item);
     }
@@ -188,7 +192,7 @@ void movimenta(Mapa *mapa, ArrayList *Solucoes, Solucao tentativa, ArrayList *pi
     resultado_validacao = verificaPosicaoForaDeLimite(*mapa, posicao_desejada);
     if(resultado_validacao == 1){
       atualizaPosCima(mapa);
-      movimenta(mapa, Solucoes, tentativa, pilhaDePosicoesValidas);
+      movimenta(mapa, Solucoes, tentativa, pilhaDePosicoesValidas, values);
     } 
   }
   if(mapa->posicao_atual_samus.x != 0){
@@ -199,7 +203,7 @@ void movimenta(Mapa *mapa, ArrayList *Solucoes, Solucao tentativa, ArrayList *pi
     resultado_validacao = verificaPosicaoForaDeLimite(*mapa, posicao_desejada);
     if((resultado_validacao == 1)&&(mapa->posicao_atual_samus.x % 2 == 0)){
       atualizaPosDiagEsquerda(mapa);
-      movimenta(mapa, Solucoes, tentativa, pilhaDePosicoesValidas);
+      movimenta(mapa, Solucoes, tentativa, pilhaDePosicoesValidas, values);
     }
   }
   if(mapa->posicao_atual_samus.x != 0){
@@ -210,7 +214,7 @@ void movimenta(Mapa *mapa, ArrayList *Solucoes, Solucao tentativa, ArrayList *pi
     resultado_validacao = verificaPosicaoForaDeLimite(*mapa, posicao_desejada);
     if((resultado_validacao == 1)&&(mapa->posicao_atual_samus.x % 2 == 1)){
       atualizaPosDiagDireita(mapa);
-      movimenta(mapa, Solucoes, tentativa, pilhaDePosicoesValidas);
+      movimenta(mapa, Solucoes, tentativa, pilhaDePosicoesValidas, values);
     }
   }
   
@@ -228,6 +232,11 @@ void movimenta(Mapa *mapa, ArrayList *Solucoes, Solucao tentativa, ArrayList *pi
     mapa->posicao_atual_samus.x = primeira_pos.x;
     mapa->posicao_atual_samus.y = primeira_pos.y;
   }
+  // time_t tempo_fim = time(NULL);
+  // tempo_gasto = tempo_fim - tempo_inicio;
+  // printf("%ld %ld",tempo_fim,tempo_inicio);
+  // printf("\n Tempo gasto pelo programa: %ld", tempo_gasto);
+
   return;
 }
 

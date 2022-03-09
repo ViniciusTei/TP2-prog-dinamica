@@ -22,12 +22,17 @@ Utilizando programação dinâmica, fazer um algoritmo que calcule a melhor rota
  - [x] Criar estrutura do personagem (Samus e monstros)
    - [x] Cada personagem deve ter um identficador unico, e um t associado
  - [x] Criar estrutura do mapa
- - [ ] Criar estrutura de movimentação
-   - [ ] Fazer uma função que percorra por todos os caminhos e armazenas os caminhos válidos em uma tabela de soluções
-   - [ ] Testar os caminhos armazenados como soluções para encontrar o melhor deles
-   - [ ] Para movimentar, a regra eh que podemos ir apenas para cima, esquerda ou direita.
+ - [x] Criar estrutura de movimentação
+   - [x] Fazer uma função que percorra por todos os caminhos e armazenas os caminhos válidos em uma tabela de soluções
+   - [x] Testar os caminhos armazenados como soluções para encontrar o melhor deles
+   - [x] Para movimentar, a regra eh que podemos ir apenas para cima, esquerda ou direita.
      - se o y é 0 pode andar pra cima e para direita
      - se o y é L - 1 pode andar pra cima epara esquerda
      - se x é par pode andar pra cima e pra direira
      - se o x é impar pode andar pra cima e para esquerda
- - [ ] Criar leitura de arquivos
+ - [x] Criar leitura de arquivos
+ - [ ] Faze extras do trabalho
+   - [x] Explicar e usar algum algoritmo para detectar células livres, porém inalcançáveis, antes da aplicação da programação dinâmica.
+   - [ ] Plotar gráficos de desempenho de tempo do algoritmo para diferentes tamanhos de entrada, definidos pelo grupo.
+   - [x] Melhorar a interface do programa, mostrando de forma gráfica o melhor caminho.
+   - [ ] Criar um programa à parte para geração de arquivos de entrada, de preferência com alguns parâmetros para orientar a geração.

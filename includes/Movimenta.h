@@ -11,7 +11,7 @@ typedef struct Solucao {
 
 void addSolucao(ArrayList *Solucoes, Solucao nova_solucao);
 void addPosicao(ArrayList *posicoes, Posicao pos);
-void movimenta(Mapa *mapa, ArrayList *Solucoes, Solucao tentativa, ArrayList *pilhaDePosicoesValidas);
+void movimenta(Mapa *mapa, ArrayList *Solucoes, Solucao tentativa, ArrayList *pilhaDePosicoesValidas, Analise *values);
 void atualizaPosCima(Mapa *mapa);
 void atualizaPosEsquerda(Mapa *mapa);
 void atualizaPosDiagEsquerda(Mapa *mapa);
@@ -20,6 +20,6 @@ int verificaEhUmNodeValido(Mapa *mapa);
 int verificaEstaNoInicioDoMapa(Mapa *mapa);
 void iniciaNovaSolucao(Solucao *sol);
 void mostraMelhorSolucao(ArrayList Solucoes, Mapa mapa);
-int verificaEhCaminhoValido(Mapa *mapa, Solucao *tentativa, ArrayList *pilhaDePosicoesValidas);
+int verificaEhCaminhoValido(Mapa *mapa, Solucao *tentativa, ArrayList *pilhaDePosicoesValidas, Analise *values);
 
 #endif
